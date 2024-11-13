@@ -12,12 +12,12 @@ class OptionPolicy
 
     public function create(User $user)
     {
-        return $user->role === 'user' || $user->role === 'manager' || $user->role === 'admin';
+        return $user->role === 'admin';
     }
 
     public function update(User $user)
     {
-        return $user->role === 'manager' || $user->role === 'admin';
+        return $user->role === 'admin';
     }
 
     public function delete(User $user)

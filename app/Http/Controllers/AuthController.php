@@ -14,8 +14,10 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'phone' => 'required|string|max:11',
+            'password' => 'required|string|min:4|confirmed',
         ]);
 
         if ($validator->fails()) {
@@ -24,6 +26,8 @@ class AuthController extends Controller
 
         $user = User::create([
             'name' => $request->name,
+            'surname' => $request->surname,
+            'phone' => $request->phone,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
@@ -46,7 +50,13 @@ class AuthController extends Controller
             $token = $user->createToken('API Token')->plainTextToken;
 
             // Возвращаем токен
-            return response()->json(['token' => $token], 200);
+            return response()->json(['token' => $token,
+                'name' => $user->name,
+                'surname' => $user->surname,
+                'phone' => $user->phone,
+                'email' => $user->email,
+                'role' => $user->role,
+            ], 200);
         }
 
         // Если не нашли пользователя или пароль неверный
