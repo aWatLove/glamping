@@ -5,6 +5,7 @@
 
 ### Диаграмма
 ![glamp.drawio.png](glamp.drawio.png)
+
 ## Пользователи
 User
 - id
@@ -23,6 +24,8 @@ Places
 - coordinatex
 - coordinatey
 - photo (URL фотографий)
+- base_id
+- tariffs_limit
 - is_del
 
 ## Тарифы 
@@ -33,6 +36,7 @@ Tariffs
 - description
 - price_per_day
 - photo (URL фотографий)
+- base_id
 - is_del
 
 ## Заказы
@@ -62,15 +66,17 @@ Additonal Options
 - count
 
 
-## Place_tariffs
+## Bases
 - id
-- place_id
-- tariff_id
+- title
+- coordinate_x
+- coordinate_y
 
 ## Order_tariffs
 - id
 - order_id
 - tariff_id
+- place_id
 - date_start
 - date_end
 - status
@@ -111,13 +117,13 @@ input:
 output:
 ```json
 {
-    "name": "test1",
-    "surname": "sdgsgdsd",
-    "phone": "12313213213",
-    "email": "test1@mail.ru",
-    "updated_at": "2024-11-13T20:57:58.000000Z",
-    "created_at": "2024-11-13T20:57:58.000000Z",
-    "id": 4
+    "name": "test1",
+    "surname": "sdgsgdsd",
+    "phone": "12313213213",
+    "email": "test1@mail.ru",
+    "updated_at": "2024-11-13T20:57:58.000000Z",
+    "created_at": "2024-11-13T20:57:58.000000Z",
+    "id": 4
 }
 ```
 
@@ -136,12 +142,12 @@ input:
 output:
 ```json
 {
-     "token": "9|GXv2xYGxvBMeGBMKv7WBLTrlceObZ73tI3MsXWJN93128b50",
-     "name": "Admin",
-     "surname": "",
-     "phone": "",
-     "email": "admin@mail.ru",
-     "role": "admin"
+    "token": "9|GXv2xYGxvBMeGBMKv7WBLTrlceObZ73tI3MsXWJN93128b50",
+    "name": "Admin",
+    "surname": "",
+    "phone": "",
+    "email": "admin@mail.ru",
+    "role": "admin"
 }
 ```
 
@@ -153,15 +159,15 @@ output:
 output:
 ```json
 {
-    "id": 1, 
-    "name": "Vladislav",
-    "email": "vlad@mail.ru",
-    "email_verified_at": null,
-    "created_at": "2024-11-11T20:13:31.000000Z",
-    "updated_at": "2024-11-11T20:13:31.000000Z",
-    "role": "user",
-    "surname": "",
-    "phone": ""
+    "id": 1,
+    "name": "Vladislav",
+    "email": "vlad@mail.ru",
+    "email_verified_at": null,
+    "created_at": "2024-11-11T20:13:31.000000Z",
+    "updated_at": "2024-11-11T20:13:31.000000Z",
+    "role": "user",
+    "surname": "",
+    "phone": ""
 }
 ```
 
@@ -239,21 +245,16 @@ Output:
 	"description":"some descriptin", 
 	"XCoordinate":52.5252,
 	"YCoordinate":34.4333,
-	"tags":[
-		"tag1", 
-		"tag2", 
-		"tagde"
-	], 
 	"tariffs":[
 		{
 			"id":1,
 			"title":"дом на колесах",
 			"description":"desc",
 			"price_per_day":5000.0, 
-			"photo":"url1",
-			"count":0
+			"photo":"url1"
 		}
 	], 
+	"tariffs_limit":3,
 	"photo":"url1"
 }
 ```
@@ -270,8 +271,8 @@ Input:
 	"description":"new description", 
 	"XCoordinate":52.0808,
 	"YCoordinate":12.1489,
-	"tags":[1, 5, 4], 
-	"tariffs":[1, 2, 3, 4, 7],
+	"base_id":1,
+	"tariff_limit":5,
 	"photo":"url1"
 }
 ```
@@ -284,11 +285,6 @@ Output:
 	"description":"some descriptin", 
 	"XCoordinate":52.5252,
 	"YCoordinate":34.4333,
-	"tags":[
-		"tag1", 
-		"tag2", 
-		"tagde"
-	], 
 	"tariffs":[
 		{
 			"id":1,
@@ -298,17 +294,18 @@ Output:
 			"photo":"url" 
 		}
 	], 
+	"tariff_limit":5,
 	"photo":"url1"
 }
 ```
 
- 
+
+
+
 ### PATCH update place info
 `PATCH /api/place/:id`
 
 **auth admin**
-
-если `tags` или `tariffs` пустые, то удалятся 
 
 Input:
 
@@ -320,9 +317,9 @@ Path: `id - int`
 	"description":"new description", 
 	"XCoordinate":52.0808,
 	"YCoordinate":12.1489,
-	"tags":[1, 5, 4], 
-	"tariffs":[1, 2, 3, 4, 7],
-	"photos":"url1"
+	"photos":"url1",
+	"base_id":3,
+	"tariff_limit":6
 }
 ```
 
@@ -334,11 +331,6 @@ Output:
 	"description":"some descriptin", 
 	"XCoordinate":52.5252,
 	"YCoordinate":34.4333,
-	"tags":[
-		"tag1", 
-		"tag2", 
-		"tagde"
-	], 
 	"tariffs":[
 		{
 			"id":1,
@@ -348,7 +340,8 @@ Output:
 			"photo":"url" 
 		}
 	], 
-	"photos":"url1"
+	"tariff_limit":5,
+	"photo":"url1"
 }
 ```
 
@@ -364,6 +357,7 @@ Soft delete
 Output: 200 ok
 
 ## Orders
+
 ### POST create order
 `POST /api/order`
 **auth**
@@ -374,7 +368,16 @@ input:
 	"place_id":1,
 	"days_count":5,
 	"tarrif_ids":[0],
-	"optional_ids":[0,2],
+	"optional_ids":[
+		{
+			"id":0,
+				"count":1
+		},
+		{
+			"id":2,
+			"count":4
+		},
+	],
 	"date_start":"2017-03-12T13:37:27+00:00",
 	"date_end":"2017-03-12T13:37:27+00:00"
 }
@@ -625,9 +628,14 @@ query:
 input: id - int
 
 
+### PATCH мок платёжного шлюза
+`PATCH /api/order/:id/pay`
 
-### Оплата, посмотреть сервисы оплаты и как это можно обработать на беке
--> меняется статус оплаты в Order'е
+input: id - int
+
+
+мок для оплаты заказа
+меняется payment_status
 
 
 ## Tarrif
@@ -645,26 +653,65 @@ output:
 			"title":"title0",
 			"description":"description0",
 			"price_per_day":500.0,
-			"photo":"url0"
+			"photo":"url0",
+			"base_id":1
 		},
 		{
 			"id":1,
 			"title":"title1",
 			"description":"description1",
 			"price_per_day":400.0,
-			"photo":"url1"
+			"photo":"url1",
+			"base_id":1
 		},
 		{
 			"id":2,
 			"title":"title2",
 			"description":"description2",
 			"price_per_day":50000.0,
-			"photo":"url2"
+			"photo":"url2",
+			"base_id":2
 		}
 	]
 }
 ```
 
+### GET all tariffs by base id
+`GET /api/tariff`/base/:id
+
+input: -
+
+output:
+```json
+{
+	"tariffs":[
+		{
+			"id":0,
+			"title":"title0",
+			"description":"description0",
+			"price_per_day":500.0,
+			"photo":"url0",
+			"base_id":1
+		},
+		{
+			"id":1,
+			"title":"title1",
+			"description":"description1",
+			"price_per_day":400.0,
+			"photo":"url1",
+			"base_id":1
+		},
+		{
+			"id":2,
+			"title":"title2",
+			"description":"description2",
+			"price_per_day":50000.0,
+			"photo":"url2",
+			"base_id":1
+		}
+	]
+}
+```
 ### GET tariff booking info. For Managers
 `GET /api/tariff/:id`
 
@@ -682,12 +729,14 @@ output:
 		{
 			"date_start":"2017-03-12T13:37:27+00:00",
 			"date_end":"2017-03-15T13:37:27+00:00",
-			"order_id":"1"
+			"order_id":1,
+			"place_id":1
 		},
 		{
 			"date_start":"2017-03-16T13:37:27+00:00",
 			"date_end":"2017-03-17T13:37:27+00:00",
-			"order_id":"1"
+			"order_id":1,
+			"place_id":1
 		}
 	]
 	
@@ -705,7 +754,8 @@ input:
 	"title":"title2",
 	"description":"description2",
 	"price_per_day":50000.0,
-	"photo":"url2"
+	"photo":"url2",
+	"base_id":1
 }
 ```
 
@@ -716,7 +766,8 @@ output:
 	"title":"title2",
 	"description":"description2",
 	"price_per_day":50000.0,
-	"photo":"url2"
+	"photo":"url2",
+	"base_id":1
 }
 ```
 
@@ -732,7 +783,8 @@ input: id - int
 	"title":"title2",
 	"description":"description2",
 	"price_per_day":50000.0,
-	"photo":"url2"
+	"photo":"url2",
+	"base_id":1
 }
 ```
 
@@ -743,7 +795,8 @@ output:
 	"title":"title2",
 	"description":"description2",
 	"price_per_day":50000.0,
-	"photo":"url2"
+	"photo":"url2",
+	"base_id":1
 }
 ```
 
@@ -755,6 +808,8 @@ output:
 input: id - int
 
 output: ok 200
+
+soft-delete
 
 
 ## Options
@@ -840,4 +895,6 @@ output:
 
 input: id - int
 output: ok
+
+soft-delete
 
