@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "96191010-c689-487f-abb4-10829b351823",
+		"name": "bases",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28541915"
+	},
+	"item": [
+		{
+			"name": "get all",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/api/bases"
+			},
+			"response": []
+		},
+		{
+			"name": "get",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/api/bases/1"
+			},
+			"response": []
+		},
+		{
+			"name": "create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Mountain Base\",\r\n    \"coordinate_x\": 45.678,\r\n    \"coordinate_y\": 56.789\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/api/bases"
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"BMX Base\",\r\n    \"coordinate_x\": 55.678,\r\n    \"coordinate_y\": 52.789\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/api/bases/1"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "{{url}}/api/bases/2"
+			},
+			"response": []
+		}
+	]
+}

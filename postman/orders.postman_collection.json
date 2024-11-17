@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "961f8b4b-8e1b-4001-bcd8-e2000b42e87a",
+		"name": "orders",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28541915"
+	},
+	"item": [
+		{
+			"name": "get all",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/api/orders"
+			},
+			"response": []
+		},
+		{
+			"name": "get",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/api/orders/1"
+			},
+			"response": []
+		},
+		{
+			"name": "create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "12|TPNxUNPe2v3GKyfwtwEKVdyznomZydOlEJgJGDd39bf430b1"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": 1,\r\n    \"place_id\": 1,\r\n    \"date_start\": \"2024-11-20\",\r\n    \"date_end\": \"2024-11-25\",\r\n    \"days_count\": 5,\r\n    \"status\": \"pending\",\r\n    \"payment_status\": \"unpaid\",\r\n    \"total_price\": 500.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/api/orders"
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": 1,\r\n    \"place_id\": 1,\r\n    \"date_start\": \"2024-11-20\",\r\n    \"date_end\": \"2024-11-25\",\r\n    \"days_count\": 5000,\r\n    \"status\": \"pending\",\r\n    \"payment_status\": \"unpaid\",\r\n    \"total_price\": 500.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/api/orders/1"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "{{url}}/api/orders/2"
+			},
+			"response": []
+		}
+	]
+}
