@@ -17,4 +17,9 @@ class Tariff extends Model
         'base_id',
         'is_del',
     ];
+
+    public function base()
+    {
+        return $this->belongsTo(Base::class);
+    }
 }
