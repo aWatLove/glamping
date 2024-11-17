@@ -1,0 +1,91 @@
+{
+	"info": {
+		"_postman_id": "7b531457-2d0b-4c7e-a673-4aa7b6c8b908",
+		"name": "places",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28541915"
+	},
+	"item": [
+		{
+			"name": "get all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/api/places"
+			},
+			"response": []
+		},
+		{
+			"name": "get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/api/places/1"
+			},
+			"response": []
+		},
+		{
+			"name": "create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Place A\",\r\n    \"description\": \"Updated description\",\r\n    \"coordinatex\": 35.00,\r\n    \"coordinatey\": 22.00,\r\n    \"photo\": \"http://example.com/updated_photo.jpg\",\r\n    \"base_id\": 1,\r\n    \"tariffs_limit\": 10,\r\n    \"is_del\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/api/places"
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"dafhsdfhsjfgd\",\r\n    \"description\": \"Updated description\",\r\n    \"coordinatex\": 35.00,\r\n    \"coordinatey\": -118.00,\r\n    \"photo\": \"http://example.com/updated_photo.jpg\",\r\n    \"base_id\": 1,\r\n    \"tariffs_limit\": 10,\r\n    \"is_del\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/api/places/1"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "{{url}}/api/places/2"
+			},
+			"response": []
+		}
+	]
+}

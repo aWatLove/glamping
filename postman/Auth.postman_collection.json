@@ -1,0 +1,85 @@
+{
+	"info": {
+		"_postman_id": "99c87b19-f317-4179-bc1a-e669439fe484",
+		"name": "Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28541915"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test1\",\r\n    \"surname\":\"sdgsgdsd\",\r\n    \"email\": \"фывафывафыва@mail.ru\",\r\n    \"phone\":\"12313213213\",\r\n    \"password\": \"test1test1\",\r\n    \"password_confirmation\": \"test1test1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/api/register"
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "9|GXv2xYGxvBMeGBMKv7WBLTrlceObZ73tI3MsXWJN93128b50"
+					}
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Vladislav\",\r\n  \"surname\":\"Suvorov\",\r\n  \"phone\":\"12341234123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/api/user"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"admin@mail.ru\",\r\n  \"password\": \"adminadmin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/api/login"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "1|Hd6BFt3a7y0CP5ug7hxkxRUUmhInZhzaIWJ9tgx0b721652d"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/api/user"
+			},
+			"response": []
+		}
+	]
+}

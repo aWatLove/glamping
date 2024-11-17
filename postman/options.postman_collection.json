@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "f1bd83d0-aec8-44b3-9ac3-0aa5e44eb88a",
+		"name": "options",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28541915"
+	},
+	"item": [
+		{
+			"name": "get all",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "10|2h1clCGNyB5dIFp98TOGUS6fRMp4dGodyldLNXZ51f02cac9"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/api/options"
+			},
+			"response": []
+		},
+		{
+			"name": "get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/api/options/1"
+			},
+			"response": []
+		},
+		{
+			"name": "create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"New Option\",\r\n    \"price\": 20.5,\r\n    \"is_del\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/api/options"
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "3|8ae1QmsROxu0lGd41WmYHaWwxanH5ZRrpl72ZUjZ6958b33d"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"New Option\",\r\n    \"price\": 10.5,\r\n    \"is_del\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/api/options/1"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "4|8OtECUq21lAQemBBKPzJeTecskmKAHe3Z5CYYfXQ88878f6a"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "{{url}}/api/options/2"
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "fa807759-5652-41bb-8b49-606f566defb2",
+		"name": "tariffs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28541915"
+	},
+	"item": [
+		{
+			"name": "get all",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "10|2h1clCGNyB5dIFp98TOGUS6fRMp4dGodyldLNXZ51f02cac9"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/api/tariffs"
+			},
+			"response": []
+		},
+		{
+			"name": "get",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "10|2h1clCGNyB5dIFp98TOGUS6fRMp4dGodyldLNXZ51f02cac9"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/api/tariffs/1"
+			},
+			"response": []
+		},
+		{
+			"name": "create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "10|2h1clCGNyB5dIFp98TOGUS6fRMp4dGodyldLNXZ51f02cac9"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Крутая палатка\",\r\n    \"description\": \"Комфортный вариант для отдыха\",\r\n    \"price_per_day\": 1500,\r\n    \"photo\": \"http://example.com/photo.jpg\",\r\n    \"base_id\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/api/tariffs"
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"БИГ БАНЯ\"\r\n    // \"description\": \"Комфортный вариант для отдыха\",\r\n    // \"price_per_day\": 16500\r\n    // \"photo\": \"http://example.com/photo.jpg\",\r\n    // \"base_id\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/api/tariffs/1"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "{{url}}/api/tariffs/2"
+			},
+			"response": []
+		}
+	]
+}
