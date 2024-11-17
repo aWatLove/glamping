@@ -117,13 +117,13 @@ input:
 output:
 ```json
 {
-    "name": "test1",
-    "surname": "sdgsgdsd",
-    "phone": "12313213213",
-    "email": "test1@mail.ru",
-    "updated_at": "2024-11-13T20:57:58.000000Z",
-    "created_at": "2024-11-13T20:57:58.000000Z",
-    "id": 4
+    "name": "test1",
+    "surname": "sdgsgdsd",
+    "phone": "12313213213",
+    "email": "test1@mail.ru",
+    "updated_at": "2024-11-13T20:57:58.000000Z",
+    "created_at": "2024-11-13T20:57:58.000000Z",
+    "id": 4
 }
 ```
 
@@ -142,12 +142,12 @@ input:
 output:
 ```json
 {
-    "token": "9|GXv2xYGxvBMeGBMKv7WBLTrlceObZ73tI3MsXWJN93128b50",
-    "name": "Admin",
-    "surname": "",
-    "phone": "",
-    "email": "admin@mail.ru",
-    "role": "admin"
+    "token": "9|GXv2xYGxvBMeGBMKv7WBLTrlceObZ73tI3MsXWJN93128b50",
+    "name": "Admin",
+    "surname": "",
+    "phone": "",
+    "email": "admin@mail.ru",
+    "role": "admin"
 }
 ```
 
@@ -159,15 +159,15 @@ output:
 output:
 ```json
 {
-    "id": 1,
-    "name": "Vladislav",
-    "email": "vlad@mail.ru",
-    "email_verified_at": null,
-    "created_at": "2024-11-11T20:13:31.000000Z",
-    "updated_at": "2024-11-11T20:13:31.000000Z",
-    "role": "user",
-    "surname": "",
-    "phone": ""
+    "id": 1,
+    "name": "Vladislav",
+    "email": "vlad@mail.ru",
+    "email_verified_at": null,
+    "created_at": "2024-11-11T20:13:31.000000Z",
+    "updated_at": "2024-11-11T20:13:31.000000Z",
+    "role": "user",
+    "surname": "",
+    "phone": ""
 }
 ```
 
@@ -374,13 +374,13 @@ input:
 	"tarrif_ids":[0],
 	"optional_ids":[
 		{
-			"id":0,
-				"count":1
+            "id":0,
+            "count":1
 		},
 		{
 			"id":2,
 			"count":4
-		},
+		}
 	],
 	"date_start":"2017-03-12T13:37:27+00:00",
 	"date_end":"2017-03-12T13:37:27+00:00"
