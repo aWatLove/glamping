@@ -215,12 +215,16 @@ Output:
 		{
 			"id":0, 
 			"title":"some place 0",
+			"description":"some place 0",
+			"photo":"photourl",
 			"XCoordinate":56.2853,
 			"YCoordinate":42.0971
 		  },
 	  { 
 			"id":1, 
-			"title":"some place 1", 
+			"title":"some place 1",
+            "description":"some place 0",
+            "photo":"photourl",
 			"XCoordinate":36.2853, 
 			"YCoordinate":52.0971
 		}
@@ -407,7 +411,8 @@ output:
 			"title":"title",
 			"description":"description",
 			"price_per_day":5000.0,
-	        "photo":"url"
+	        "photo":"url",
+            "status":"Обрабатывается"
 		}
 	],
 	"days_count":5,
@@ -462,7 +467,9 @@ output:
 		"id":0,
 		"title":"title",
 		"description":"description",
-		"price_per_day":5000.0
+		"price_per_day":5000.0,
+        "photo": "sdgsgfdg",
+        "status":"Обрабатывается"
 	},
 	"days_count":5,
 	"status":"Обрабатывается",
@@ -617,6 +624,15 @@ output:
 input: id - int
 
 query: 
+- status
+
+### PATCH поменять статус тарифа заказа
+`PATCH /api/order/:id/tariff/:id/process`
+
+**auth admin**
+input: id - int
+
+query:
 - status
 
 
