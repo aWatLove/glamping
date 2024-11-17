@@ -20,4 +20,10 @@ class Base extends Model
     {
         return $this->hasMany(Place::class);
     }
+
+    // Связь с тарифами
+    public function tariffs()
+    {
+        return $this->hasMany(Tariff::class);
+    }
 }
