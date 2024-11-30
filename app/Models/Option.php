@@ -12,6 +12,14 @@ class Option extends Model
     protected $fillable = [
         'title',
         'price',
+        'count',
         'is_del',
     ];
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_options')
+            ->withPivot('count');
+    }
+
 }

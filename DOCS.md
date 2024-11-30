@@ -362,10 +362,10 @@ Output: 200 ok
 
 ## Orders
 
-### POST create order
+### POST create order //done
 `POST /api/order`
 **auth**
-//todo
+
 input:
 ```json
 {
@@ -390,57 +390,58 @@ input:
 output:
 ```json
 {
-	"id":0,
-	"user":{
-		"id":0,
-		"username":"username0",
-		"firstname":"vlad",
-		"lastname":"suvorov",
-        "email":"mail@mail.ru",
-		"phone":"89528120252"
-	},
-	"place":{
-		"id":0,
-		"title":"sometitle",
-		"XCoordinate":52.2552,
-		"YCoordinate":52.5252
-	},
-	"tariffs":[
-		{
-			"id":0,
-			"title":"title",
-			"description":"description",
-			"price_per_day":5000.0,
-	        "photo":"url",
-            "status":"Обрабатывается"
-		}
-	],
-	"days_count":5,
-	"status":"Обрабатывается",
-	"date_start":"2017-03-12T13:37:27+00:00",
-	"date_end":"2017-03-17T13:37:27+00:00",
-	"additional_options":[
-		{
-			"id":0,
-			"title":"opt0",
-			"price":200.0,
-			"count":1
-		},
-		{
-			"id":2,
-			"title":"opt2",
-			"price":100.0,
-			"count":4
-		}
-	],
-	"total_price":25600.0,
-	"payment_status":"Не оплачено",
-	"created_at":"2017-03-12T13:37:27+00:00",
-	"updated_at":"2017-03-12T13:37:27+00:00"
+    "data": {
+        "id": 0,
+        "user": {
+            "id": 0,
+            "name": "vlad",
+            "surname": "suvorov",
+            "email": "mail@mail.ru",
+            "phone": "89528120252"
+        },
+        "place": {
+            "id": 0,
+            "title": "sometitle",
+            "XCoordinate": 52.2552,
+            "YCoordinate": 52.5252
+        },
+        "tariffs": [
+            {
+                "id": 0,
+                "title": "title",
+                "description": "description",
+                "price_per_day": 5000.0,
+                "photo": "url",
+                "status": "Обрабатывается"
+            }
+        ],
+        "days_count": 5,
+        "status": "Обрабатывается",
+        "date_start": "2017-03-12",
+        "date_end": "2017-03-17",
+        "additional_options": [
+            {
+                "id": 0,
+                "title": "opt0",
+                "price": 200.0,
+                "count": 1
+            },
+            {
+                "id": 2,
+                "title": "opt2",
+                "price": 100.0,
+                "count": 4
+            }
+        ],
+        "total_price": 25600.0,
+        "payment_status": "Не оплачено",
+        "created_at": "2017-03-12T13:37:27+00:00",
+        "updated_at": "2017-03-12T13:37:27+00:00"
+    }
 }
 ```
 
-### GET order by id
+### GET order by id  //done
 `GET /api/order/:id`
 
 input: id - int,
@@ -448,172 +449,389 @@ input: id - int,
 output:
 ```json
 {
-	"id":0,
-	"user":{
-		"id":0,
-		"username":"username0",
-		"firstname":"vlad",
-		"lastname":"suvorov",
-		"phone":"89528120252"
-	},
-	"place":{
-		"id":0,
-		"title":"sometitle",
-		"description":"description",
-		"XCoordinate":52.2552,
-		"YCoordinate":52.5252
-	},
-	"tariff":{
-		"id":0,
-		"title":"title",
-		"description":"description",
-		"price_per_day":5000.0,
-        "photo": "sdgsgfdg",
-        "status":"Обрабатывается"
-	},
-	"days_count":5,
-	"status":"Обрабатывается",
-	"date_start":"2017-03-12T13:37:27+00:00",
-	"date_end":"2017-03-17T13:37:27+00:00",
-	"additional_oprions":[
-		{
-			"id":0,
-			"title":"opt0",
-			"price":200.0,
-			"count":1
-		},
-		{
-			"id":2,
-			"title":"opt2",
-			"price":100.0,
-			"count":4
-		}
-	],
-	"total_price":25600.0,
-	"payment_status":"Не оплачено",
-	"created_at":"2017-03-12T13:37:27+00:00",
-	"updated_at":"2017-03-12T13:37:27+00:00"
+    "data": {
+        "id": 0,
+        "user": {
+            "id": 0,
+            "name": "vlad",
+            "surname": "suvorov",
+            "email": "mail@mail.ru",
+            "phone": "89528120252"
+        },
+        "place": {
+            "id": 0,
+            "title": "sometitle",
+            "XCoordinate": 52.2552,
+            "YCoordinate": 52.5252
+        },
+        "tariffs": [
+            {
+                "id": 0,
+                "title": "title",
+                "description": "description",
+                "price_per_day": 5000.0,
+                "photo": "url",
+                "status": "Обрабатывается"
+            }
+        ],
+        "days_count": 5,
+        "status": "Обрабатывается",
+        "date_start": "2017-03-12",
+        "date_end": "2017-03-17",
+        "additional_options": [
+            {
+                "id": 0,
+                "title": "opt0",
+                "price": 200.0,
+                "count": 1
+            },
+            {
+                "id": 2,
+                "title": "opt2",
+                "price": 100.0,
+                "count": 4
+            }
+        ],
+        "total_price": 25600.0,
+        "payment_status": "Не оплачено",
+        "created_at": "2017-03-12T13:37:27+00:00",
+        "updated_at": "2017-03-12T13:37:27+00:00"
+    }
 }
 ```
 
-### GET users by user_id order previews. for Managers
+### GET users by user_id order. for Admins //done
 `GET /api/order/user/:id`
 
 **auth admin**
 
-input: username - string
+возвращаются все заказы пользователя по user_id, отсортированно по updated_at
+
 
 output:
 ```json
 {
-	"orders":[
+	"data":[
 		{
-			"id":0,
-			"place":{
-				"id":0,
-				"title":"title"
-			},
-			"status":"На месте",
-			"payment_status":"Оплачено",
-			"days_count":5,
-			"total_price":25600.0,
-			"created_at":"2017-03-12T13:37:27+00:00",
-			"updated_at":"2017-03-12T13:37:27+00:00"
+            "id": 0,
+            "user": {
+                "id": 0,
+                "name": "vlad",
+                "surname": "suvorov",
+                "email": "mail@mail.ru",
+                "phone": "89528120252"
+            },
+            "place": {
+                "id": 0,
+                "title": "sometitle",
+                "XCoordinate": 52.2552,
+                "YCoordinate": 52.5252
+            },
+            "tariffs": [
+                {
+                    "id": 0,
+                    "title": "title",
+                    "description": "description",
+                    "price_per_day": 5000.0,
+                    "photo": "url",
+                    "status": "Обрабатывается"
+                }
+            ],
+            "days_count": 5,
+            "status": "Обрабатывается",
+            "date_start": "2017-03-12",
+            "date_end": "2017-03-17",
+            "additional_options": [
+                {
+                    "id": 0,
+                    "title": "opt0",
+                    "price": 200.0,
+                    "count": 1
+                },
+                {
+                    "id": 2,
+                    "title": "opt2",
+                    "price": 100.0,
+                    "count": 4
+                }
+            ],
+            "total_price": 25600.0,
+            "payment_status": "Не оплачено",
+            "created_at": "2017-03-12T13:37:27+00:00",
+            "updated_at": "2017-03-12T13:37:27+00:00"
 		},
-		{
-			"id":1,
-			"place":{
-				"id":1,
-				"title":"title"
-			},
-			"status":"В пути",
-			"payment_status":"Оплачено",
-			"days_count":2,
-			"total_price":16300.0,
-			"created_at":"2017-03-12T13:37:27+00:00",
-			"updated_at":"2017-03-12T13:37:27+00:00"
-		}
+        {
+            "id": 2,
+            "user": {
+                "id": 0,
+                "name": "vlad",
+                "surname": "suvorov",
+                "email": "mail@mail.ru",
+                "phone": "89528120252"
+            },
+            "place": {
+                "id": 0,
+                "title": "sometitle",
+                "XCoordinate": 52.2552,
+                "YCoordinate": 52.5252
+            },
+            "tariffs": [
+                {
+                    "id": 0,
+                    "title": "title",
+                    "description": "description",
+                    "price_per_day": 5000.0,
+                    "photo": "url",
+                    "status": "Обрабатывается"
+                }
+            ],
+            "days_count": 5,
+            "status": "Обрабатывается",
+            "date_start": "2017-03-12",
+            "date_end": "2017-03-17",
+            "additional_options": [
+                {
+                    "id": 0,
+                    "title": "opt0",
+                    "price": 200.0,
+                    "count": 1
+                },
+                {
+                    "id": 2,
+                    "title": "opt2",
+                    "price": 100.0,
+                    "count": 4
+                }
+            ],
+            "total_price": 25600.0,
+            "payment_status": "Не оплачено",
+            "created_at": "2017-03-12T13:37:27+00:00",
+            "updated_at": "2017-03-12T13:37:27+00:00"
+        }
 	]
 }
 ```
 
-### GET all users orders previews. for Managers
-`GET /api/order/`
+### GET all users orders previews. for Managers //done
+`GET /api/orders`
 
 **auth admin**
 
-input: username - string
+возвращаются все заказы всех пользователей, отсортированно по updated_at
+
 
 output:
 ```json
 {
-	"orders":[
-		{
-			"id":0,
-			"place":{
-				"id":0,
-				"title":"title"
-			},
-			"status":"На месте",
-			"payment_status":"Оплачено",
-			"days_count":5,
-			"total_price":25600.0,
-			"created_at":"2017-03-12T13:37:27+00:00",
-			"updated_at":"2017-03-12T13:37:27+00:00"
-		},
-		{
-			"id":1,
-			"place":{
-				"id":1,
-				"title":"title"
-			},
-			"status":"В пути",
-			"payment_status":"Оплачено",
-			"days_count":2,
-			"total_price":16300.0,
-			"created_at":"2017-03-12T13:37:27+00:00",
-			"updated_at":"2017-03-12T13:37:27+00:00"
-		}
-	]
+    "data":[
+        {
+            "id": 0,
+            "user": {
+                "id": 0,
+                "name": "vlad",
+                "surname": "suvorov",
+                "email": "mail@mail.ru",
+                "phone": "89528120252"
+            },
+            "place": {
+                "id": 0,
+                "title": "sometitle",
+                "XCoordinate": 52.2552,
+                "YCoordinate": 52.5252
+            },
+            "tariffs": [
+                {
+                    "id": 0,
+                    "title": "title",
+                    "description": "description",
+                    "price_per_day": 5000.0,
+                    "photo": "url",
+                    "status": "Обрабатывается"
+                }
+            ],
+            "days_count": 5,
+            "status": "Обрабатывается",
+            "date_start": "2017-03-12",
+            "date_end": "2017-03-17",
+            "additional_options": [
+                {
+                    "id": 0,
+                    "title": "opt0",
+                    "price": 200.0,
+                    "count": 1
+                },
+                {
+                    "id": 2,
+                    "title": "opt2",
+                    "price": 100.0,
+                    "count": 4
+                }
+            ],
+            "total_price": 25600.0,
+            "payment_status": "Не оплачено",
+            "created_at": "2017-03-12T13:37:27+00:00",
+            "updated_at": "2017-03-12T13:37:27+00:00"
+        },
+        {
+            "id": 2,
+            "user": {
+                "id": 0,
+                "name": "vlad",
+                "surname": "suvorov",
+                "email": "mail@mail.ru",
+                "phone": "89528120252"
+            },
+            "place": {
+                "id": 0,
+                "title": "sometitle",
+                "XCoordinate": 52.2552,
+                "YCoordinate": 52.5252
+            },
+            "tariffs": [
+                {
+                    "id": 0,
+                    "title": "title",
+                    "description": "description",
+                    "price_per_day": 5000.0,
+                    "photo": "url",
+                    "status": "Обрабатывается"
+                }
+            ],
+            "days_count": 5,
+            "status": "Обрабатывается",
+            "date_start": "2017-03-12",
+            "date_end": "2017-03-17",
+            "additional_options": [
+                {
+                    "id": 0,
+                    "title": "opt0",
+                    "price": 200.0,
+                    "count": 1
+                },
+                {
+                    "id": 2,
+                    "title": "opt2",
+                    "price": 100.0,
+                    "count": 4
+                }
+            ],
+            "total_price": 25600.0,
+            "payment_status": "Не оплачено",
+            "created_at": "2017-03-12T13:37:27+00:00",
+            "updated_at": "2017-03-12T13:37:27+00:00"
+        }
+    ]
 }
 ```
 
 ### GET user order previews. for User
-`GET /api/order`
+`GET /api/orders`
+
+возвращаются все заказы пользователя
 
 input: 
 
 output:
 ```json
 {
-	"orders":[
-		{
-			"id":0,
-			"place":{
-				"id":0,
-				"title":"title"
-			},
-			"status":"На месте",
-			"payment_status":"Оплачено",
-			"days_count":5,
-			"total_price":25600.0,
-			"created_at":"2017-03-12T13:37:27+00:00",
-			"updated_at":"2017-03-12T13:37:27+00:00"
-		},
-		{
-			"id":1,
-			"place":{
-				"id":1,
-				"title":"title"
-			},
-			"status":"В пути",
-			"payment_status":"Оплачено",
-			"days_count":2,
-			"total_price":16300.0,
-			"created_at":"2017-03-12T13:37:27+00:00",
-			"updated_at":"2017-03-12T13:37:27+00:00"
-		}
-	]
+    "data":[
+        {
+            "id": 0,
+            "user": {
+                "id": 0,
+                "name": "vlad",
+                "surname": "suvorov",
+                "email": "mail@mail.ru",
+                "phone": "89528120252"
+            },
+            "place": {
+                "id": 0,
+                "title": "sometitle",
+                "XCoordinate": 52.2552,
+                "YCoordinate": 52.5252
+            },
+            "tariffs": [
+                {
+                    "id": 0,
+                    "title": "title",
+                    "description": "description",
+                    "price_per_day": 5000.0,
+                    "photo": "url",
+                    "status": "Обрабатывается"
+                }
+            ],
+            "days_count": 5,
+            "status": "Обрабатывается",
+            "date_start": "2017-03-12",
+            "date_end": "2017-03-17",
+            "additional_options": [
+                {
+                    "id": 0,
+                    "title": "opt0",
+                    "price": 200.0,
+                    "count": 1
+                },
+                {
+                    "id": 2,
+                    "title": "opt2",
+                    "price": 100.0,
+                    "count": 4
+                }
+            ],
+            "total_price": 25600.0,
+            "payment_status": "Не оплачено",
+            "created_at": "2017-03-12T13:37:27+00:00",
+            "updated_at": "2017-03-12T13:37:27+00:00"
+        },
+        {
+            "id": 2,
+            "user": {
+                "id": 0,
+                "name": "vlad",
+                "surname": "suvorov",
+                "email": "mail@mail.ru",
+                "phone": "89528120252"
+            },
+            "place": {
+                "id": 0,
+                "title": "sometitle",
+                "XCoordinate": 52.2552,
+                "YCoordinate": 52.5252
+            },
+            "tariffs": [
+                {
+                    "id": 0,
+                    "title": "title",
+                    "description": "description",
+                    "price_per_day": 5000.0,
+                    "photo": "url",
+                    "status": "Обрабатывается"
+                }
+            ],
+            "days_count": 5,
+            "status": "Обрабатывается",
+            "date_start": "2017-03-12",
+            "date_end": "2017-03-17",
+            "additional_options": [
+                {
+                    "id": 0,
+                    "title": "opt0",
+                    "price": 200.0,
+                    "count": 1
+                },
+                {
+                    "id": 2,
+                    "title": "opt2",
+                    "price": 100.0,
+                    "count": 4
+                }
+            ],
+            "total_price": 25600.0,
+            "payment_status": "Не оплачено",
+            "created_at": "2017-03-12T13:37:27+00:00",
+            "updated_at": "2017-03-12T13:37:27+00:00"
+        }
+    ]
 }
 ```
 
@@ -743,19 +961,45 @@ output:
 	"photo":"url0",
 	"booking":[
 		{
-			"date_start":"2017-03-12T13:37:27+00:00",
-			"date_end":"2017-03-15T13:37:27+00:00",
+			"date_start":"2017-03-12",
+			"date_end":"2017-03-15",
 			"order_id":1,
 			"place_id":1
 		},
 		{
-			"date_start":"2017-03-16T13:37:27+00:00",
-			"date_end":"2017-03-17T13:37:27+00:00",
+			"date_start":"2017-03-16",
+			"date_end":"2017-03-17",
 			"order_id":1,
 			"place_id":1
 		}
 	]
 	
+}
+```
+
+### GET tariff booking info. For Users
+`GET /api/tariff/:id`
+
+input: -
+
+output:
+```json
+{
+	"id":0,
+	"title":"title0",
+	"description":"description0",
+	"price_per_day":500.0,
+	"photo":"url0",
+	"booking":[
+		{
+			"date_start":"2017-03-12",
+			"date_end":"2017-03-15"
+		},
+		{
+            "date_start":"2017-03-20",
+            "date_end":"2017-03-25"
+		}
+	]
 }
 ```
 
