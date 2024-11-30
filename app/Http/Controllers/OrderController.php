@@ -6,6 +6,7 @@ use App\Http\Resources\OrderResource;
 use App\Models\Option;
 use App\Models\Order;
 use App\Models\OrderTariff;
+use App\Models\Place;
 use App\Models\Tariff;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -83,7 +84,7 @@ class OrderController extends Controller
         $validatedData = $request->validate([
             'place_id' => 'required|exists:places,id',
             'days_count' => 'required|integer|min:1',
-            'tariff_ids' => 'required|array',
+            'tariff_ids' => 'required|array|min:1',
             'tariff_ids.*' => 'integer|exists:tariffs,id',
             'optional_ids' => 'required|array',
             'optional_ids.*.id' => 'required|integer|exists:options,id',
@@ -92,26 +93,31 @@ class OrderController extends Controller
             'date_end' => 'required|date|after:date_start',
         ]);
 
-        // Проверка на пересечение дат для тарифов
-        foreach ($validatedData['tariff_ids'] as $tariffId) {
-            $isOccupied = DB::table('order_tariffs')
-                ->where('tariff_id', $tariffId)
-                ->where('place_id', $validatedData['place_id'])
-                ->where(function ($query) use ($validatedData) {
-                    $query->whereBetween('date_start', [$validatedData['date_start'], $validatedData['date_end']])
-                        ->orWhereBetween('date_end', [$validatedData['date_start'], $validatedData['date_end']])
-                        ->orWhere(function ($query) use ($validatedData) {
-                            $query->where('date_start', '<=', $validatedData['date_start'])
-                                ->where('date_end', '>=', $validatedData['date_end']);
-                        });
-                })
-                ->exists();
+        // Получаем лимит для места
+        $place = Place::find($validatedData['place_id']);
+        $tariffLimit = $place->tariffs_limit;
 
-            if ($isOccupied) {
-                return response()->json([
-                    'message' => "Tariff ID $tariffId is already booked for the selected dates.",
-                ], 422);
-            }
+        // Считаем текущее количество бронирований для всех переданных тарифов на указанное место и даты
+        $currentBookings = DB::table('order_tariffs')
+            ->where('place_id', $validatedData['place_id'])
+            ->where(function ($query) use ($validatedData) {
+                $query->whereBetween('date_start', [$validatedData['date_start'], $validatedData['date_end']])
+                    ->orWhereBetween('date_end', [$validatedData['date_start'], $validatedData['date_end']])
+                    ->orWhere(function ($query) use ($validatedData) {
+                        $query->where('date_start', '<=', $validatedData['date_start'])
+                            ->where('date_end', '>=', $validatedData['date_end']);
+                    });
+            })
+            ->count();
+
+        // Считаем количество новых тарифов
+        $newTariffsCount = count($validatedData['tariff_ids']);
+
+        // Проверяем, превышает ли общее количество бронирований лимит
+        if (($currentBookings + $newTariffsCount) > $tariffLimit) {
+            return response()->json([
+                'message' => "Booking exceeds the tariff limit for this place. Maximum allowed: $tariffLimit.",
+            ], 422);
         }
 
         // Проверка, что все опции доступны в указанном количестве
@@ -123,7 +129,6 @@ class OrderController extends Controller
                 ], 422);
             }
         }
-
 
         // Создание заказа
         $order = Order::create([
@@ -167,6 +172,7 @@ class OrderController extends Controller
 
         return new OrderResource($order);
     }
+
 
     public function update(Request $request, $id)
     {
