@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Resources\OrderResource;
 use App\Models\Option;
 use App\Models\Order;
+use App\Models\OrderTariff;
 use App\Models\Tariff;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +19,7 @@ class OrderController extends Controller
     public function __construct()
     {
         // Ограничиваем доступ к методам по ролям
-        $this->middleware('auth:sanctum')->only(['show', 'create', 'update', 'destroy', 'adminRules']);
+        $this->middleware('auth:sanctum')->only(['show', 'create', 'update', 'destroy', 'adminRules', 'pay', 'cancel']);
     }
 
     public function index()
@@ -130,8 +132,8 @@ class OrderController extends Controller
             'date_start' => $validatedData['date_start'],
             'date_end' => $validatedData['date_end'],
             'days_count' => $validatedData['days_count'],
-            'status' => 'pending',
-            'payment_status' => 'unpaid',
+            'status' => 'Обрабатывается',
+            'payment_status' => 'Не оплачено',
             'total_price' => 0,
         ]);
 
@@ -142,7 +144,7 @@ class OrderController extends Controller
                 'place_id' => $validatedData['place_id'],
                 'date_start' => $validatedData['date_start'],
                 'date_end' => $validatedData['date_end'],
-                'status' => 'pending',
+                'status' => 'Обрабатывается',
             ]);
             $order->total_price += $tariff->price_per_day * $validatedData['days_count'];
         }
@@ -188,5 +190,186 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         $order->delete();
         return response(null, 204);
+    }
+
+
+    public function process($id, Request $request)
+    {
+        // Проверка на роль (admin)
+        $this->authorize('adminRules', Order::class);
+
+        // Находим заказ по ID
+        $order = Order::find($id);
+
+        if (!$order) {
+            return response()->json([
+                'message' => "Order with ID $id not found.",
+            ], 404); // Если заказ не найден, возвращаем ошибку
+        }
+
+        // Проверяем, что статус передан в запросе
+        $status = $request->query('status');
+
+        // Проверка на валидность статуса
+        $validStatuses = [
+            'Обрабатывается',
+            'В пути',
+            'Доставлено',
+            'Отменено',
+            'Ошибка',
+        ];
+
+        if (!in_array($status, $validStatuses)) {
+            return response()->json([
+                'message' => "Invalid status provided.",
+            ], 422); // Если статус невалидный, возвращаем ошибку
+        }
+
+        // Обновляем статус заказа
+        $order->status = $status;
+        $order->save();
+
+        // Возвращаем успешный ответ с новым статусом
+        return response()->json([
+            'message' => "Order status updated successfully.",
+            'order' => new OrderResource($order),
+        ], 200);
+    }
+
+    // Метод для изменения статуса тарифа в заказе
+    public function updateTariffStatus(Request $request, $orderId, $tariffId)
+    {
+        $this->authorize('adminRules', Order::class);
+
+        $validStatuses = [
+            'Обрабатывается',
+            'В пути',
+            'Доставлено',
+            'Отменено',
+            'Ошибка',
+        ];
+
+        // Проверяем, что статус передан в запросе
+        $status = $request->query('status');
+        if (!in_array($status, $validStatuses)) {
+            return response()->json([
+                'message' => 'Invalid status provided.',
+            ], 422); // Статус невалидный
+        }
+
+        // Находим заказ по ID
+        $order = Order::find($orderId);
+        if (!$order) {
+            return response()->json([
+                'message' => "Order with ID $orderId not found.",
+            ], 404); // Заказ не найден
+        }
+
+        // Находим тариф в таблице order_tariffs для указанного заказа и тарифа
+        $orderTariff = OrderTariff::where('order_id', $orderId)
+            ->where('tariff_id', $tariffId)
+            ->first();
+
+        if (!$orderTariff) {
+            return response()->json([
+                'message' => "Tariff with ID $tariffId not found in order with ID $orderId.",
+            ], 404); // Тариф не найден в заказе
+        }
+
+        // Обновляем статус тарифа
+        $orderTariff->status = $status;
+        $orderTariff->save();
+
+        return response()->json([
+            'message' => "Tariff status updated successfully.",
+            'order_tariff' => new OrderResource($order), // Возвращаем обновленные данные о тарифе
+        ]);
+    }
+
+    // Метод для отмены заказа
+    public function cancel(Request $request, $orderId)
+    {
+
+        $this->authorize('cancel', Order::class);
+
+        $order = Order::find($orderId);
+
+        if (!$order) {
+            return response()->json([
+                'message' => "Order with ID $orderId not found.",
+            ], 404); // Если заказ не найден
+        }
+
+        // Проверяем, является ли пользователь владельцем заказа или администратором
+        if (auth()->user()->role !== 'admin') {
+            if ($order->user_id !== auth()->id()) {
+                return response()->json([
+                    'message' => "You are not authorized to cancel this order.",
+                ], 403); // Если пользователь не владелец и не администратор
+            }
+        }
+
+
+        // Проверяем, что заказ можно отменить (до даты начала)
+        if (Carbon::parse($order->date_start)->isPast()) {
+            return response()->json([
+                'message' => "The order cannot be canceled after the start date.",
+            ], 422); // Если дата начала уже прошла
+        }
+
+        // Отменяем заказ
+        $order->status = 'Отменен';
+        $order->save();
+
+        return response()->json([
+            'message' => "Order with ID $orderId has been successfully canceled.",
+            'order' => new OrderResource($order), // Возвращаем данные обновленного заказа
+        ]);
+    }
+
+    // Метод для обработки мока платёжного шлюза
+    public function pay(Request $request, $orderId)
+    {
+
+        $this->authorize('pay', Order::class);
+
+
+        // Найдем заказ по ID
+        $order = Order::find($orderId);
+
+        if (!$order) {
+            return response()->json([
+                'message' => "Order with ID $orderId not found.",
+            ], 404); // Если заказ не найден
+        }
+
+        // Проверяем, что заказ не был отменен или уже оплачен
+        if ($order->status === 'Отменен') {
+            return response()->json([
+                'message' => "Order with ID $orderId is canceled and cannot be paid.",
+            ], 422); // Если заказ отменен
+        }
+
+        if ($order->payment_status === 'Оплачено') {
+            return response()->json([
+                'message' => "Order with ID $orderId has already been paid.",
+            ], 422); // Если заказ уже оплачен
+        }
+
+        // Проверка на то, что текущий пользователь является владельцем заказа или администратором
+        if ($order->user_id !== Auth::id()) {
+            return response()->json([
+                'message' => "You are not authorized to pay this order.",
+            ], 403);
+        }
+
+        // Мокируем успешную оплату
+        $order->payment_status = 'Оплачено';
+        $order->save();
+
+        return response()->json([
+            'message' => "Order with ID $orderId has been successfully paid.",
+            'order' => new OrderResource($order), // Возвращаем данные обновленного заказа
+        ]);
     }
 }

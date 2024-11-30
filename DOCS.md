@@ -835,8 +835,8 @@ output:
 }
 ```
 
-### PATCH поменять статус order'а
-`PATCH /api/order/:id/process`
+### PATCH поменять статус order'а //done
+`PATCH /api/orders/:id/process`
 
 **auth admin**
 input: id - int
@@ -844,8 +844,16 @@ input: id - int
 query: 
 - status
 
-### PATCH поменять статус тарифа заказа
-`PATCH /api/order/:id/tariff/:id/process`
+
+```json
+{
+    "message": "",
+    "order": {}
+}
+```
+
+### PATCH поменять статус тарифа заказа //done
+`PATCH /api/orders/:id/tariff/:id/process`
 
 **auth admin**
 input: id - int
@@ -853,17 +861,29 @@ input: id - int
 query:
 - status
 
+```json
+{
+    "message": "",
+    "order": {}
+}
+```
 
-### PATCH отменить заказ
-`PATCH /api/order/:id/cancel`
+### PATCH отменить заказ //done
+`PATCH /api/orders/:id/cancel`
 
 **auth**
 
 input: id - int
 
+```json
+{
+    "message": "",
+    "order": {}
+}
+```
 
-### PATCH мок платёжного шлюза
-`PATCH /api/order/:id/pay`
+### PATCH мок платёжного шлюза //done 
+`POST /api/orders/:id/pay`
 
 input: id - int
 
@@ -871,6 +891,12 @@ input: id - int
 мок для оплаты заказа
 меняется payment_status
 
+```json
+{
+    "message": "",
+    "order": {}
+}
+```
 
 ## Tarrif
 ### GET all tariffs

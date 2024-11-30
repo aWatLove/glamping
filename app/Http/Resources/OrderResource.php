@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\OrderTariff;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderResource extends JsonResource
@@ -24,17 +25,21 @@ class OrderResource extends JsonResource
                 'YCoordinate' => $this->place->coordinatey,
             ] : null,
             'tariffs' => $this->tariffs ? $this->tariffs->map(function ($tariff) {
+                $orderTariff = OrderTariff::where('order_id', $this->id)
+                    ->where('tariff_id', $tariff->id)
+                    ->first();
+
                 return [
                     'id' => $tariff->id,
                     'title' => $tariff->title,
                     'description' => $tariff->description,
                     'price_per_day' => $tariff->price_per_day,
                     'photo' => $tariff->photo,
-                    'status' => 'Обрабатывается',
+                    'status' => $orderTariff->status,
                 ];
             }) : [],
             'days_count' => $this->days_count,
-            'status' => $this->status === 'pending' ? 'Обрабатывается' : $this->status,
+            'status' => $this->status,
             'date_start' => $this->date_start,
             'date_end' => $this->date_end,
             'additional_options' => $this->options ? $this->options->map(function ($option) {
@@ -46,7 +51,7 @@ class OrderResource extends JsonResource
                 ];
             }) : [],
             'total_price' => $this->total_price,
-            'payment_status' => $this->payment_status === 'unpaid' ? 'Не оплачено' : $this->payment_status,
+            'payment_status' => $this->payment_status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

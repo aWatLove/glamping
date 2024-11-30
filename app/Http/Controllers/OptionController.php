@@ -64,7 +64,9 @@ class OptionController extends Controller
         $this->authorize('delete', Option::class); // Проверка на роль
 
         $option = Option::findOrFail($id);
-        $option->delete();
+
+        $option->is_del = true;
+        $option->save();
         return response()->json(['message' => 'Option deleted successfully']);
     }
 }
