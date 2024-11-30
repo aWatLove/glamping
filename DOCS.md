@@ -199,7 +199,7 @@ output:
 
 ## Place
 ### GET all place previews around
-`GET /api/place`
+`GET /api/places`
 **auth**
 
 Input: 
@@ -233,7 +233,7 @@ Output:
 ```
 
 ### GET place by id
-`GET /api/place/:id`
+`GET /api/places/:id`
 
 **auth**
 
@@ -264,7 +264,7 @@ Output:
 ```
 
 ### POST create place
-`POST /api/place`
+`POST /api/places`
 
 **auth admin**
 
@@ -307,7 +307,7 @@ Output:
 
 
 ### PATCH update place info
-`PATCH /api/place/:id`
+`PATCH /api/places/:id`
 
 **auth admin**
 
@@ -350,7 +350,7 @@ Output:
 ```
 
 ### DELETE place
-`DELETE /api/place/:id`
+`DELETE /api/places/:id`
 
 **auth admin**
 
@@ -363,7 +363,7 @@ Output: 200 ok
 ## Orders
 
 ### POST create order //done
-`POST /api/order`
+`POST /api/orders`
 **auth**
 
 input:
@@ -442,7 +442,7 @@ output:
 ```
 
 ### GET order by id  //done
-`GET /api/order/:id`
+`GET /api/orders/:id`
 
 input: id - int,
 
@@ -501,7 +501,7 @@ output:
 ```
 
 ### GET users by user_id order. for Admins //done
-`GET /api/order/user/:id`
+`GET /api/orders/user/:id`
 
 **auth admin**
 
@@ -900,7 +900,7 @@ input: id - int
 
 ## Tarrif
 ### GET all tariffs
-`GET /api/tariff`
+`GET /api/tariffs`
 
 input: -
 
@@ -937,7 +937,7 @@ output:
 ```
 
 ### GET all tariffs by base id
-`GET /api/tariff`/base/:id
+`GET /api/tariffs/base/:id`
 
 input: -
 
@@ -973,7 +973,7 @@ output:
 }
 ```
 ### GET tariff booking info. For Managers
-`GET /api/tariff/:id`
+`GET /api/tariffs/:id`
 
 input: -
 
@@ -1004,7 +1004,7 @@ output:
 ```
 
 ### GET tariff booking info. For Users
-`GET /api/tariff/:id`
+`GET /api/tariffs/:id`
 
 input: -
 
@@ -1030,7 +1030,7 @@ output:
 ```
 
 ### POST create tariff
-`POST /api/tariff`
+`POST /api/tariffs`
 
 **auth admin**
 
@@ -1058,7 +1058,7 @@ output:
 ```
 
 ### PATCH update tariff
-`PATCH /api/tariff/:id`
+`PATCH /api/tariffs/:id`
 
 **auth admin**
 
@@ -1087,7 +1087,7 @@ output:
 ```
 
 ### DELETE delete tariff
-`DELETE /api/tariff/:id`
+`DELETE /api/tariffs/:id`
 
 **auth admin**
 
@@ -1097,6 +1097,118 @@ output: ok 200
 
 soft-delete
 
+## BASES
+### GET all bases
+`GET /api/bases`
+
+input: -
+
+output:
+```json
+{
+    "data": [
+        {
+            "id": 3,
+            "title": "Mountain Base",
+            "coordinate_x": "45.678",
+            "coordinate_y": "56.789",
+            "created_at": "2024-11-30T17:30:58.000000Z",
+            "updated_at": "2024-11-30T17:30:58.000000Z"
+        },
+        {
+            "id": 1,
+            "title": "BMX Base",
+            "coordinate_x": "55.678",
+            "coordinate_y": "52.789",
+            "created_at": "2024-11-17T18:33:35.000000Z",
+            "updated_at": "2024-11-17T18:34:25.000000Z"
+        }
+    ]
+}
+```
+
+### GET base by id
+`GET /api/bases/:id`
+
+input: -
+
+output:
+```json
+{
+    "data": {
+        "id": 1,
+        "title": "BMX Base",
+        "coordinate_x": "55.678",
+        "coordinate_y": "52.789",
+        "created_at": "2024-11-17T18:33:35.000000Z",
+        "updated_at": "2024-11-17T18:34:25.000000Z"
+    }
+}
+```
+
+### POST create base
+`POST /api/bases`
+**auth admin**
+
+input:
+```json
+{
+    "title": "Mountain Base",
+    "coordinate_x": 45.678,
+    "coordinate_y": 56.789
+}
+```
+
+output:
+```json
+{
+    "data": {
+        "id": 4,
+        "title": "Mountain Base",
+        "coordinate_x": 45.678,
+        "coordinate_y": 56.789,
+        "created_at": "2024-11-30T17:38:53.000000Z",
+        "updated_at": "2024-11-30T17:38:53.000000Z"
+    }
+}
+```
+
+
+### PATCH update base
+`PATCH /api/bases/:id`
+**auth admin**
+
+input: id - int
+
+```json
+{
+	"title":"title",
+	"price":200.0,
+	"count":10
+}
+```
+
+output:
+```json
+{
+    "data": {
+        "id": 1,
+        "title": "BMX Base",
+        "coordinate_x": 55.678,
+        "coordinate_y": 52.789,
+        "created_at": "2024-11-17T18:33:35.000000Z",
+        "updated_at": "2024-11-17T18:34:25.000000Z"
+    }
+}
+```
+
+### DELETE base
+`DELETE /api/bases/:id`
+
+input: id - int
+output: ok
+
+soft-delete
 
 ## Options
 ### GET all options
@@ -1107,26 +1219,40 @@ input: -
 output:
 ```json
 {
-	"options":[
-		{
-			"id":0,
-			"title":"title0",
-			"price":200.0,
-			"count":10
-		},
-		{
-			"id":1,
-			"title":"title1",
-			"price":100.0,
-			"count":10
-		},
-		{
-			"id":2,
-			"title":"title2",
-			"price":400.0,
-			"count":10
-		}
-	]
+    "data": [
+        {
+            "id": 5,
+            "title": "New Option",
+            "price": "1000.50",
+            "count": 500,
+            "created_at": "2024-11-30T17:27:31.000000Z",
+            "updated_at": "2024-11-30T17:27:54.000000Z"
+        },
+        {
+            "id": 4,
+            "title": "New Option",
+            "price": "1000.50",
+            "count": 5,
+            "created_at": "2024-11-17T18:19:16.000000Z",
+            "updated_at": "2024-11-30T17:25:54.000000Z"
+        },
+        {
+            "id": 3,
+            "title": "New Option",
+            "price": "20.50",
+            "count": 34,
+            "created_at": "2024-11-11T20:56:07.000000Z",
+            "updated_at": "2024-11-30T16:02:58.000000Z"
+        },
+        {
+            "id": 1,
+            "title": "New Option",
+            "price": "10.50",
+            "count": 2,
+            "created_at": "2024-11-11T20:55:00.000000Z",
+            "updated_at": "2024-11-30T12:21:27.000000Z"
+        }
+    ]
 }
 ```
 
@@ -1136,18 +1262,26 @@ output:
 
 input:
 
-Query:
-- title - string
-- price - double
+```json
+{
+    "title": "New Option",
+    "price": 20.5,
+    "count":200
+}
+```
 
 
 output:
 ```json
 {
-	"id":2,
-	"title":"title2",
-	"price":400.0,
-	"count":10
+    "data": {
+        "id": 6,
+        "title": "New Option",
+        "price": 20.5,
+        "count": 200,
+        "created_at": "2024-11-30T17:44:00.000000Z",
+        "updated_at": "2024-11-30T17:44:00.000000Z"
+    }
 }
 ```
 
@@ -1169,10 +1303,14 @@ input: id - int
 output:
 ```json
 {
-	"id":2,
-	"title":"title2",
-	"price":400.0,
-	"count":10
+    "data": {
+        "id": 5,
+        "title": "New Option",
+        "price": 1000.5,
+        "count": 500,
+        "created_at": "2024-11-30T17:27:31.000000Z",
+        "updated_at": "2024-11-30T17:44:17.000000Z"
+    }
 }
 ```
 
