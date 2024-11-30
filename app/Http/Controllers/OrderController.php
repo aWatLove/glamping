@@ -17,19 +17,58 @@ class OrderController extends Controller
     public function __construct()
     {
         // Ограничиваем доступ к методам по ролям
-        $this->middleware('auth:sanctum')->only(['show', 'create', 'update', 'destroy']);
+        $this->middleware('auth:sanctum')->only(['show', 'create', 'update', 'destroy', 'adminRules']);
     }
 
     public function index()
     {
         $this->authorize('show', Order::class); // Проверка на роль
-        return Order::all();
+
+
+        if (auth()->user()->role === 'admin') {
+            $orders = Order::orderBy('updated_at', 'desc')->get();
+
+            return OrderResource::collection($orders);
+        }
+
+        $userId = auth()->id();
+
+        $orders = Order::where('user_id', $userId)->orderBy('updated_at', 'desc')->get();
+
+        return OrderResource::collection($orders);
+    }
+
+    public function getOrdersByUser($id)
+    {
+        $this->authorize('adminRules', Order::class);
+
+        // Получаем все заказы, у которых user_id совпадает с переданным в параметре id
+        $orders = Order::where('user_id', $id)->orderBy('updated_at', 'desc')->get();
+
+        // Возвращаем их в формате Resource
+        return OrderResource::collection($orders);
     }
 
     public function show($id)
     {
         $this->authorize('show', Order::class); // Проверка на роль
-        return Order::findOrFail($id);
+
+        $order = Order::find($id);
+
+        if (!$order) {
+            return response()->json([
+                'message' => "Order with ID $id not found.",
+            ], 404); // HTTP 404 Not Found
+        }
+
+        // Проверка, если пользователь не администратор, то он может просматривать только свои заказы
+        if (auth()->user()->role !== 'admin' && auth()->user()->id !== $order->user_id) {
+            return response()->json([
+                'message' => "You are not authorized to view this order.",
+            ], 403); // HTTP 403 Forbidden
+        }
+
+        return new OrderResource($order);
     }
 
     public function store(Request $request)
