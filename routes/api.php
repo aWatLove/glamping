@@ -27,6 +27,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/orders/{id}', [OrderController::class, 'update']);
     Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
     Route::get('/orders/user/{id}', [OrderController::class, 'getOrdersByUser']);
+    Route::patch('/orders/{id}/process', [OrderController::class, 'process']);
+    Route::patch('/orders/{orderId}/tariff/{tariffId}/process', [OrderController::class, 'updateTariffStatus']);
+    Route::patch('/orders/{orderId}/cancel', [OrderController::class, 'cancel']);
+    Route::post('/orders/{orderId}/pay', [OrderController::class, 'pay']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {

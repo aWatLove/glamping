@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BasesResource;
 use App\Models\Base;
 use Illuminate\Http\Request;
 
@@ -18,14 +19,24 @@ class BasesController extends Controller
     {
         $this->authorize('show', Base::class); // Проверка на роль
 
-        return Base::all();
+        $bases = Base::where('is_del', false)->orderBy('updated_at', 'desc')->get();
+
+        // Возвращаем их в формате Resource
+        return BasesResource::collection($bases);
     }
 
     public function show($id)
     {
         $this->authorize('show', Base::class); // Проверка на роль
 
-        return Base::findOrFail($id);
+        $base = Base::find($id);
+
+        if (!$base) {
+            return response()->json([
+                'message' => "Base with ID $id not found.",
+            ], 404); // HTTP 404 Not Found
+        }
+        return new BasesResource($base);
     }
 
     public function store(Request $request)
@@ -38,7 +49,7 @@ class BasesController extends Controller
             'coordinate_y' => 'required|numeric',
         ]);
 
-        return Base::create($validated);
+        return new BasesResource(Base::create($validated));
     }
 
     public function update(Request $request, $id)
@@ -55,7 +66,7 @@ class BasesController extends Controller
 
         $base->update($validated);
 
-        return $base;
+        return new BasesResource($base);
     }
 
     public function destroy($id)
@@ -63,7 +74,9 @@ class BasesController extends Controller
         $this->authorize('delete', Base::class); // Проверка на роль
 
         $base = Base::findOrFail($id);
-        $base->delete();
+
+        $base->is_del = true;
+        $base->save();
 
         return response()->json(['message' => 'Base deleted successfully']);
     }
