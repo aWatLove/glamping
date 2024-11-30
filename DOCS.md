@@ -362,10 +362,10 @@ Output: 200 ok
 
 ## Orders
 
-### POST create order
+### POST create order //done
 `POST /api/order`
 **auth**
-//todo
+
 input:
 ```json
 {
@@ -417,8 +417,8 @@ output:
 	],
 	"days_count":5,
 	"status":"Обрабатывается",
-	"date_start":"2017-03-12T13:37:27+00:00",
-	"date_end":"2017-03-17T13:37:27+00:00",
+	"date_start":"2017-03-12",
+	"date_end":"2017-03-17",
 	"additional_options":[
 		{
 			"id":0,
