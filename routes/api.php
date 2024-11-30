@@ -34,10 +34,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/tariffs', [TariffController::class, 'store']);
     Route::put('/tariffs/{id}', [TariffController::class, 'update']);
     Route::delete('/tariffs/{id}', [TariffController::class, 'destroy']);
+    Route::get('/tariff/base/{id}', [TariffController::class, 'getAllByBaseId']);
 });
 
 Route::get('/places', [PlaceController::class, 'index']);
 Route::get('/places/{id}', [PlaceController::class, 'show']);
+Route::get('/place', [PlaceController::class, 'getPlacesByArround']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/places', [PlaceController::class, 'store']);

@@ -9,6 +9,10 @@ class Place extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'coordinatex' => 'float', // Автоматически приводит к float (аналог double)
+        'coordinatey' => 'float',
+    ];
     protected $fillable = [
         'title',
         'description',

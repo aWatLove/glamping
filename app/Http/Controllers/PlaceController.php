@@ -87,4 +87,58 @@ class PlaceController extends Controller
 
         return response()->json(['message' => 'Place deleted']);
     }
+
+    public function getPlacesByArround(Request $request)
+    {
+        // Получаем параметры из запроса
+        $Xcoord = $request->query('Xcoord');
+        $Ycoord = $request->query('Ycoord');
+        $Radius = $request->query('Radius');
+
+        // Получаем все места
+        $places = Place::all();
+
+        // Преобразуем координаты в радианы
+        $lat1 = deg2rad($Xcoord);
+        $lon1 = deg2rad($Ycoord);
+
+        // Фильтруем места
+        $filteredPlaces = $places->filter(function ($place) use ($lat1, $lon1, $Radius) {
+            // Преобразуем координаты места в радианы
+            $lat2 = deg2rad((float)$place->XCoordinate);
+            $lon2 = deg2rad((float)$place->YCoordinate);
+
+
+            // Расстояние
+            $distance = $this->haversine($lat1, $lon1, $lat2, $lon2);
+
+            // Возвращаем только места, расстояние до которых меньше или равно радиусу
+            return $distance <= $Radius;
+        });
+
+        return response()->json($filteredPlaces->values());
+    }
+
+    function haversine($lat1, $lon1,
+                       $lat2, $lon2)
+    {
+        // distance between latitudes
+        // and longitudes
+        $dLat = ($lat2 - $lat1) *
+            M_PI / 180.0;
+        $dLon = ($lon2 - $lon1) *
+            M_PI / 180.0;
+
+        // convert to radians
+        $lat1 = ($lat1) * M_PI / 180.0;
+        $lat2 = ($lat2) * M_PI / 180.0;
+
+        // apply formulae
+        $a = pow(sin($dLat / 2), 2) +
+            pow(sin($dLon / 2), 2) *
+            cos($lat1) * cos($lat2);
+        $rad = 6371;
+        $c = 2 * asin(sqrt($a));
+        return $rad * $c;
+    }
 }

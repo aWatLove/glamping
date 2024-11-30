@@ -68,4 +68,10 @@ class TariffController extends Controller
         $tariff->update(['is_del' => true]);
         return response(null, 204);
     }
+
+    public function getAllByBaseId($base_id)
+    {
+        return Tariff::where('base_id', $base_id)->get();
+
+    }
 }
