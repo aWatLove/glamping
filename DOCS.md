@@ -743,14 +743,14 @@ output:
 	"photo":"url0",
 	"booking":[
 		{
-			"date_start":"2017-03-12T13:37:27+00:00",
-			"date_end":"2017-03-15T13:37:27+00:00",
+			"date_start":"2017-03-12",
+			"date_end":"2017-03-15",
 			"order_id":1,
 			"place_id":1
 		},
 		{
-			"date_start":"2017-03-16T13:37:27+00:00",
-			"date_end":"2017-03-17T13:37:27+00:00",
+			"date_start":"2017-03-16",
+			"date_end":"2017-03-17",
 			"order_id":1,
 			"place_id":1
 		}
