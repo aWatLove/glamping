@@ -43,7 +43,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"New Option\",\r\n    \"price\": 20.5,\r\n    \"is_del\": false\r\n}",
+					"raw": "{\r\n    \"title\": \"New Option\",\r\n    \"price\": 20.5,\r\n    \"count\":200\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -60,21 +60,21 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "3|8ae1QmsROxu0lGd41WmYHaWwxanH5ZRrpl72ZUjZ6958b33d"
+						"token": "11|8mXEHVXSPoTPKLysU7MXrtKdNNP1tkfjntOZZ2vZ751d48e4"
 					}
 				},
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"New Option\",\r\n    \"price\": 10.5,\r\n    \"is_del\": false\r\n}",
+					"raw": "{\r\n    \"title\": \"New Option\",\r\n    \"price\": 1000.5,\r\n    \"count\":500\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "{{url}}/api/options/1"
+				"url": "{{url}}/api/options/5"
 			},
 			"response": []
 		},
