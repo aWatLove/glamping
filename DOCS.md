@@ -362,10 +362,10 @@ Output: 200 ok
 
 ## Orders
 
-### POST create order
+### POST create order //done
 `POST /api/order`
 **auth**
-//todo
+
 input:
 ```json
 {
@@ -417,8 +417,8 @@ output:
 	],
 	"days_count":5,
 	"status":"Обрабатывается",
-	"date_start":"2017-03-12T13:37:27+00:00",
-	"date_end":"2017-03-17T13:37:27+00:00",
+	"date_start":"2017-03-12",
+	"date_end":"2017-03-17",
 	"additional_options":[
 		{
 			"id":0,
@@ -743,19 +743,45 @@ output:
 	"photo":"url0",
 	"booking":[
 		{
-			"date_start":"2017-03-12T13:37:27+00:00",
-			"date_end":"2017-03-15T13:37:27+00:00",
+			"date_start":"2017-03-12",
+			"date_end":"2017-03-15",
 			"order_id":1,
 			"place_id":1
 		},
 		{
-			"date_start":"2017-03-16T13:37:27+00:00",
-			"date_end":"2017-03-17T13:37:27+00:00",
+			"date_start":"2017-03-16",
+			"date_end":"2017-03-17",
 			"order_id":1,
 			"place_id":1
 		}
 	]
 	
+}
+```
+
+### GET tariff booking info. For Users
+`GET /api/tariff/:id`
+
+input: -
+
+output:
+```json
+{
+	"id":0,
+	"title":"title0",
+	"description":"description0",
+	"price_per_day":500.0,
+	"photo":"url0",
+	"booking":[
+		{
+			"date_start":"2017-03-12",
+			"date_end":"2017-03-15"
+		},
+		{
+            "date_start":"2017-03-20",
+            "date_end":"2017-03-25"
+		}
+	]
 }
 ```
 
