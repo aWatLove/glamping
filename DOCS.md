@@ -759,6 +759,32 @@ output:
 }
 ```
 
+### GET tariff booking info. For Users
+`GET /api/tariff/:id`
+
+input: -
+
+output:
+```json
+{
+	"id":0,
+	"title":"title0",
+	"description":"description0",
+	"price_per_day":500.0,
+	"photo":"url0",
+	"booking":[
+		{
+			"date_start":"2017-03-12",
+			"date_end":"2017-03-15"
+		},
+		{
+            "date_start":"2017-03-20",
+            "date_end":"2017-03-25"
+		}
+	]
+}
+```
+
 ### POST create tariff
 `POST /api/tariff`
 
