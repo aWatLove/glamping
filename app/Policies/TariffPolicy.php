@@ -29,4 +29,9 @@ class TariffPolicy
     {
         return $user->role === 'admin';
     }
+
+    public function getTariffBookingById(User $user)
+    {
+        return $user->role === 'admin' || $user->role === 'user';
+    }
 }

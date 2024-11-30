@@ -91,26 +91,23 @@ class PlaceController extends Controller
     public function getPlacesByArround(Request $request)
     {
         // Получаем параметры из запроса
-        $Xcoord = $request->query('Xcoord');
-        $Ycoord = $request->query('Ycoord');
-        $Radius = $request->query('Radius');
+        $latitudeFrom = (float)$request->query('Xcoord');
+        $longitudeFrom = (float)$request->query('Ycoord');
+        $Radius = (float)$request->query('Radius');
 
         // Получаем все места
         $places = Place::all();
 
-        // Преобразуем координаты в радианы
-        $lat1 = deg2rad($Xcoord);
-        $lon1 = deg2rad($Ycoord);
 
         // Фильтруем места
-        $filteredPlaces = $places->filter(function ($place) use ($lat1, $lon1, $Radius) {
+        $filteredPlaces = $places->filter(function ($place) use ($latitudeFrom, $longitudeFrom, $Radius) {
             // Преобразуем координаты места в радианы
-            $lat2 = deg2rad((float)$place->XCoordinate);
-            $lon2 = deg2rad((float)$place->YCoordinate);
+            $latitudeTo = (float)$place->coordinatex;
+            $longitudeTo = (float)$place->coordinatey;
 
 
             // Расстояние
-            $distance = $this->haversine($lat1, $lon1, $lat2, $lon2);
+            $distance = $this->haversineGreatCircleDistance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo);
 
             // Возвращаем только места, расстояние до которых меньше или равно радиусу
             return $distance <= $Radius;
@@ -119,26 +116,21 @@ class PlaceController extends Controller
         return response()->json($filteredPlaces->values());
     }
 
-    function haversine($lat1, $lon1,
-                       $lat2, $lon2)
+    function haversineGreatCircleDistance(
+        $latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371)
     {
-        // distance between latitudes
-        // and longitudes
-        $dLat = ($lat2 - $lat1) *
-            M_PI / 180.0;
-        $dLon = ($lon2 - $lon1) *
-            M_PI / 180.0;
+        // convert from degrees to radians
+        $latFrom = deg2rad($latitudeFrom);
+        $lonFrom = deg2rad($longitudeFrom);
+        $latTo = deg2rad($latitudeTo);
+        $lonTo = deg2rad($longitudeTo);
 
-        // convert to radians
-        $lat1 = ($lat1) * M_PI / 180.0;
-        $lat2 = ($lat2) * M_PI / 180.0;
+        $latDelta = $latTo - $latFrom;
+        $lonDelta = $lonTo - $lonFrom;
 
-        // apply formulae
-        $a = pow(sin($dLat / 2), 2) +
-            pow(sin($dLon / 2), 2) *
-            cos($lat1) * cos($lat2);
-        $rad = 6371;
-        $c = 2 * asin(sqrt($a));
-        return $rad * $c;
+        $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
+                cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+
+        return $angle * $earthRadius;
     }
 }
