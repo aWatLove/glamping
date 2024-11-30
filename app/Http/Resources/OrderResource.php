@@ -12,17 +12,16 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'user' => $this->user ? [
                 'id' => $this->user->id,
-                'username' => $this->user->username,
-                'firstname' => $this->user->firstname,
-                'lastname' => $this->user->lastname,
+                'name' => $this->user->name,
+                'surname' => $this->user->surname,
                 'email' => $this->user->email,
                 'phone' => $this->user->phone,
             ] : null,
             'place' => $this->place ? [
                 'id' => $this->place->id,
                 'title' => $this->place->title,
-                'XCoordinate' => $this->place->x_coordinate,
-                'YCoordinate' => $this->place->y_coordinate,
+                'XCoordinate' => $this->place->coordinatex,
+                'YCoordinate' => $this->place->coordinatey,
             ] : null,
             'tariffs' => $this->tariffs ? $this->tariffs->map(function ($tariff) {
                 return [

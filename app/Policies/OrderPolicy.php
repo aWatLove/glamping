@@ -29,4 +29,9 @@ class OrderPolicy
     {
         return $user->role === 'admin';
     }
+
+    public function adminRules(User $user)
+    {
+        return $user->role === 'admin';
+    }
 }
