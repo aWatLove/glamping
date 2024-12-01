@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PlaceArroundResource;
+use App\Http\Resources\PlaceResource;
+use App\Models\OrderTariff;
 use App\Models\Place;
 use Illuminate\Http\Request;
 
@@ -26,7 +29,10 @@ class PlaceController extends Controller
             return response()->json(['message' => 'Place not found'], 404);
         }
 
-        return response()->json($place);
+        //return response()->json($place);
+       // $orderTariff = OrderTariff::where('place_id', $place->id)->get();
+       // echo $orderTariff;
+        return new PlaceResource($place);
     }
 
     public function store(Request $request)
@@ -98,6 +104,12 @@ class PlaceController extends Controller
         // Получаем все места
         $places = Place::all();
 
+//        if (!$places) {
+//            return response()->json([
+//                'message' => "Places not found.",
+//            ], 404); // Если мест нет, возвращаем ошибку
+//        }
+
 
         // Фильтруем места
         $filteredPlaces = $places->filter(function ($place) use ($latitudeFrom, $longitudeFrom, $Radius) {
@@ -113,7 +125,14 @@ class PlaceController extends Controller
             return $distance <= $Radius;
         });
 
-        return response()->json($filteredPlaces->values());
+//        if (!$filteredPlaces) {
+//            return response()->json([
+//                'message' => "Places in area not found.",
+//            ], 404); // Если в радиусе мест нет, возвращаем ошибку
+//        }
+
+        //return response()->json($filteredPlaces->values());
+        return PlaceArroundResource::collection($filteredPlaces);
     }
 
     function haversineGreatCircleDistance(

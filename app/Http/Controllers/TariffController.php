@@ -73,8 +73,15 @@ class TariffController extends Controller
 
     public function getAllByBaseId($base_id)
     {
-        return Tariff::where('base_id', $base_id)->get();
+        $tariff = Tariff::where('base_id', $base_id)->get();
 
+        if (!$tariff) {
+            return response()->json([
+                'message' => "Tariff with base_ID $base_id not found.",
+            ], 404); // Если тариф не найден, возвращаем ошибку
+        }
+
+        return $tariff;
     }
 
     public function getTariffBookingById($id)
@@ -82,6 +89,11 @@ class TariffController extends Controller
         $this->authorize('getTariffBookingById', Tariff::class); // Проверка на роль
         $tariff = Tariff::findOrFail($id);
 
+        if (!$tariff) {
+            return response()->json([
+                'message' => "Tariff with ID $id not found.",
+            ], 404); // Если тариф не найден, возвращаем ошибку
+        }
         if(auth()->user()->role === 'admin'){
 
             return new TariffsResourceForManagers($tariff);

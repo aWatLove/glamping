@@ -28,4 +28,9 @@ class Place extends Model
     {
         return $this->belongsTo(Base::class);
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_tariffs');
+    }
 }
