@@ -43,7 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/tariffs/booking/{id}', [TariffController::class, 'getTariffBookingById']);
 });
 
-Route::get('/places', [PlaceController::class, 'index']);
+Route::get('/places/all', [PlaceController::class, 'index']);
 Route::get('/places/{id}', [PlaceController::class, 'show']);
 Route::get('/places', [PlaceController::class, 'getPlacesByArround']);
 
