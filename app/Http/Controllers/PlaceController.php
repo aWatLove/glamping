@@ -52,7 +52,7 @@ class PlaceController extends Controller
 
         $place = Place::create($validated);
 
-        return response()->json($place, 201);
+        return new PlaceResource($place);
     }
 
     public function update(Request $request, $id)
