@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PlaceArroundResource;
 use App\Http\Resources\PlaceResource;
-use App\Models\OrderTariff;
 use App\Models\Place;
 use Illuminate\Http\Request;
 
@@ -18,7 +17,8 @@ class PlaceController extends Controller
 
     public function index()
     {
-        return response()->json(Place::all());
+        $places = Place::all();
+        return PlaceResource::collection($places);
     }
 
     public function show($id)
@@ -29,9 +29,6 @@ class PlaceController extends Controller
             return response()->json(['message' => 'Place not found'], 404);
         }
 
-        //return response()->json($place);
-       // $orderTariff = OrderTariff::where('place_id', $place->id)->get();
-       // echo $orderTariff;
         return new PlaceResource($place);
     }
 
@@ -42,13 +39,18 @@ class PlaceController extends Controller
         $validated = $request->validate([
             'title' => 'required|string',
             'description' => 'nullable|string',
-            'coordinatex' => 'required|numeric',
-            'coordinatey' => 'required|numeric',
-            'photo' => 'nullable|string',
+            'XCoordinate' => 'required|numeric',
+            'YCoordinate' => 'required|numeric',
             'base_id' => 'required|exists:bases,id',
-            'tariffs_limit' => 'required|integer',
-            'is_del' => 'boolean',
+            'tariff_limit' => 'required|integer',
+            'photo' => 'nullable|string',
+
         ]);
+
+        // Преобразование имен полей для соответствия БД
+        $validated['coordinatex'] = $validated['XCoordinate'];
+        $validated['coordinatey'] = $validated['YCoordinate'];
+        unset($validated['XCoordinate'], $validated['YCoordinate']);
 
         $place = Place::create($validated);
 
@@ -99,16 +101,11 @@ class PlaceController extends Controller
         // Получаем параметры из запроса
         $latitudeFrom = (float)$request->query('Xcoord');
         $longitudeFrom = (float)$request->query('Ycoord');
-        $Radius = (float)$request->query('Radius');
+        $Radius = (float)$request->query('Radius', 50);
+
 
         // Получаем все места
         $places = Place::all();
-
-//        if (!$places) {
-//            return response()->json([
-//                'message' => "Places not found.",
-//            ], 404); // Если мест нет, возвращаем ошибку
-//        }
 
 
         // Фильтруем места
@@ -124,12 +121,6 @@ class PlaceController extends Controller
             // Возвращаем только места, расстояние до которых меньше или равно радиусу
             return $distance <= $Radius;
         });
-
-//        if (!$filteredPlaces) {
-//            return response()->json([
-//                'message' => "Places in area not found.",
-//            ], 404); // Если в радиусе мест нет, возвращаем ошибку
-//        }
 
         //return response()->json($filteredPlaces->values());
         return PlaceArroundResource::collection($filteredPlaces);

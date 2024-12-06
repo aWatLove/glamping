@@ -211,7 +211,7 @@ Query:
 Output:
 ```json
 {
-	"places":[
+	"data":[
 		{
 			"id":0, 
 			"title":"some place 0",
@@ -273,14 +273,13 @@ Output:
 Input:
 ```json
 {
-    "title": "Place A",
-    "description": "Updated description",
-    "coordinatex": 135.00,
-    "coordinatey": 122.00,
-    "photo": "http://example.com/updated_photo.jpg",
-    "base_id": 3,
-    "tariffs_limit": 6,
-    "is_del": false
+    "title":"new plave title",
+    "description":"new description",
+    "XCoordinate":52.0808,
+    "YCoordinate":12.1489,
+    "base_id":1,
+    "tariff_limit":5,
+    "photo":"url1"
 }
 ```
 
