@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "127.0.0.1:8000:8000"
+        volumes:
+            - .:/var/www/html
+        networks:
+            - app-network
+        extra_hosts:
+            - "localhost:127.0.0.1"
+        environment:
+            - APP_URL=http://127.0.0.1:8000
+            - DB_HOST=postgres
+            - DB_PORT=5432
+            - DB_DATABASE=ecolook
+            - DB_USERNAME=postgres
+            - DB_PASSWORD=postgres
+
+    postgres:
+        image: postgres:15
+        restart: always
+        environment:
+            POSTGRES_DB: ecolook
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        ports:
+            - "5432:5432"
+        networks:
+            - app-network
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    pgdata:
