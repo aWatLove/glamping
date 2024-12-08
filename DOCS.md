@@ -211,7 +211,7 @@ Query:
 Output:
 ```json
 {
-	"places":[
+	"data":[
 		{
 			"id":0, 
 			"title":"some place 0",
@@ -244,22 +244,24 @@ Path: `id - Long`
 Output:
 ```json
 {
-	"id":0,
-	"title":"some place", 
-	"description":"some descriptin", 
-	"XCoordinate":52.5252,
-	"YCoordinate":34.4333,
-	"tariffs":[
-		{
-			"id":1,
-			"title":"дом на колесах",
-			"description":"desc",
-			"price_per_day":5000.0, 
-			"photo":"url1"
-		}
-	], 
-	"tariffs_limit":3,
-	"photo":"url1"
+    "data": {
+        "id": 1,
+        "title": "Place A",
+        "description": "Updated description",
+        "XCoordinate": 35.2,
+        "YCoordinate": 22.2,
+        "tariffs": [
+            {
+                "id": 1,
+                "title": "Крутая палатка",
+                "description": "Комфортный вариант для отдыха",
+                "price_per_day": "1500",
+                "photo": "http://example.com/photo.jpg"
+            }
+        ],
+        "tariffs_limit": 10,
+        "photo": "http://example.com/updated_photo.jpg"
+    }
 }
 ```
 
@@ -271,35 +273,37 @@ Output:
 Input:
 ```json
 {
-	"title":"new plave title",
-	"description":"new description", 
-	"XCoordinate":52.0808,
-	"YCoordinate":12.1489,
-	"base_id":1,
-	"tariff_limit":5,
-	"photo":"url1"
+    "title":"new plave title",
+    "description":"new description",
+    "XCoordinate":52.0808,
+    "YCoordinate":12.1489,
+    "base_id":1,
+    "tariff_limit":5,
+    "photo":"url1"
 }
 ```
 
 Output:
 ```json
 {
-	"id":0,
-	"title":"some place", 
-	"description":"some descriptin", 
-	"XCoordinate":52.5252,
-	"YCoordinate":34.4333,
-	"tariffs":[
-		{
-			"id":1,
-			"title":"title1",
-			"description":"desc",
-			"price_per_day":5000.0, 
-			"photo":"url" 
-		}
-	], 
-	"tariff_limit":5,
-	"photo":"url1"
+    "data": {
+        "id": 1,
+        "title": "Place A",
+        "description": "Updated description",
+        "XCoordinate": 35.2,
+        "YCoordinate": 22.2,
+        "tariffs": [
+            {
+                "id": 1,
+                "title": "Крутая палатка",
+                "description": "Комфортный вариант для отдыха",
+                "price_per_day": "1500",
+                "photo": "http://example.com/photo.jpg"
+            }
+        ],
+        "tariffs_limit": 10,
+        "photo": "http://example.com/updated_photo.jpg"
+    }
 }
 ```
 
@@ -973,59 +977,62 @@ output:
 }
 ```
 ### GET tariff booking info. For Managers
-`GET /api/tariffs/:id`
+`GET /api/tariffs/booking/:id`
 
 input: -
 
 output:
 ```json
 {
-	"id":0,
-	"title":"title0",
-	"description":"description0",
-	"price_per_day":500.0,
-	"photo":"url0",
-	"booking":[
-		{
-			"date_start":"2017-03-12",
-			"date_end":"2017-03-15",
-			"order_id":1,
-			"place_id":1
-		},
-		{
-			"date_start":"2017-03-16",
-			"date_end":"2017-03-17",
-			"order_id":1,
-			"place_id":1
-		}
-	]
-	
+    "data": {
+        "id": 1,
+        "title": "Крутая палатка",
+        "description": "Комфортный вариант для отдыха",
+        "price_per_day": "1500",
+        "photo": "http://example.com/photo.jpg",
+        "booking": [
+            {
+                "date_start": "2025-04-20",
+                "date_end": "2025-04-25",
+                "order_id": 1,
+                "place_id": 1
+            },
+            {
+                "date_start": "2025-04-22",
+                "date_end": "2025-04-27",
+                "order_id": 2,
+                "place_id": 1
+            }
+        ]
+    }
 }
 ```
 
 ### GET tariff booking info. For Users
-`GET /api/tariffs/:id`
+`GET /api/tariffs/booking/:id`
 
 input: -
 
 output:
 ```json
 {
-	"id":0,
-	"title":"title0",
-	"description":"description0",
-	"price_per_day":500.0,
-	"photo":"url0",
-	"booking":[
-		{
-			"date_start":"2017-03-12",
-			"date_end":"2017-03-15"
-		},
-		{
-            "date_start":"2017-03-20",
-            "date_end":"2017-03-25"
-		}
-	]
+    "data": {
+        "id": 1,
+        "title": "Крутая палатка",
+        "description": "Комфортный вариант для отдыха",
+        "price_per_day": "1500",
+        "photo": "http://example.com/photo.jpg",
+        "booking": [
+            {
+                "date_start": "2025-04-20",
+                "date_end": "2025-04-25"
+            },
+            {
+                "date_start": "2025-04-22",
+                "date_end": "2025-04-27"
+            }
+        ]
+    }
 }
 ```
 

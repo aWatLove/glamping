@@ -9,6 +9,10 @@ class Place extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'coordinatex' => 'float', // Автоматически приводит к float (аналог double)
+        'coordinatey' => 'float',
+    ];
     protected $fillable = [
         'title',
         'description',
@@ -23,5 +27,10 @@ class Place extends Model
     public function base()
     {
         return $this->belongsTo(Base::class);
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_tariffs');
     }
 }
